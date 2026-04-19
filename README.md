@@ -2,6 +2,11 @@
 
 A personal collection of Agent Skills.
 
+## Other skills
+
+- [https://github.com/Undertone0809/skill-creator](https://github.com/Undertone0809/skill-creator)
+- [https://github.com/Undertone0809/flomo-skills](https://github.com/Undertone0809/flomo-skills)
+
 ## Quick Start
 
 ```
