@@ -2,33 +2,40 @@
 name: conversation-to-skill
 description: >
   Turn the current conversation's workflow into a reusable agent skill. Use this
-  whenever the user wants to capture today's task as a repeatable capability,
-  says things like "turn this into a skill", "abstract this workflow", "make
-  this reusable next time", or is clearly trying to productize a successful
-  collaboration into a durable agent pattern. Also use it when a one-off task
-  is really becoming a standing workflow and the agent should extract triggers,
-  inputs, outputs, steps, and boundaries before writing a new skill.
+  whenever the user wants to make a workflow reusable, standardize a successful
+  thread, package an agent capability, or convert an ad hoc process into a
+  repeatable skill. Read the thread first, extract the stable pattern, decide
+  whether the skill should live in `~/.agents/skills/<name>` or
+  `<project-path>/.agents/skills/<name>`, write the skill, and when quality
+  matters add lightweight evals and iteration instead of just transcribing the
+  chat.
 ---
 
 # Conversation To Skill
 
-This skill converts the work happening in the current conversation into a
-reusable agent skill.
+This skill turns the work happening in the current conversation into a reusable
+agent skill.
 
 Its job is not just to write `SKILL.md`.
-Its job is to decide what part of the conversation is actually worth
-standardizing, separate the stable pattern from one-off details, and then turn
-that pattern into a skill the agent can use again later.
+Its job is to identify the durable workflow, separate it from one-off thread
+noise, decide the right packaging and placement, and produce a skill that will
+actually help a future agent perform better.
+
+When useful, this skill should borrow the practical methods of `skill-creator`:
+good descriptions, clean skill structure, eval-friendly organization, and an
+improve-via-feedback loop. Do not blindly copy that skill. Reuse the know-how
+that helps this specific workflow.
 
 ## Use This Skill For
 
 Use this skill when the user is trying to:
 
 - turn the current task or workflow into a reusable skill
-- capture a successful collaboration pattern so future runs can follow it
+- capture a successful collaboration pattern for future runs
 - standardize how a class of tasks should be handled
 - extract a repeatable agent workflow from the current thread
-- package a process, judgment framework, or execution sequence into an agent skill
+- package a reasoning framework, execution sequence, or artifact pattern into a skill
+- upgrade an existing draft skill so it is general, usable, and easier to trigger
 
 Typical prompts:
 
@@ -37,6 +44,7 @@ Typical prompts:
 - "Make this reusable for next time."
 - "Abstract this workflow into a Codex skill."
 - "This should be a standard operating pattern, not a one-off chat."
+- "Clean up this skill and make it actually reusable."
 
 ## Do Not Use This Skill For
 
@@ -46,11 +54,14 @@ Do not use this skill when the user mainly wants:
 - immediate execution of the task with no abstraction step
 - a skill generated from multiple unseen threads you cannot inspect
 - a rigid template that blindly copies file paths, project names, or temporary constraints
+- a generic skill factory that ignores what was actually valuable in the conversation
 
 If the conversation does not yet reveal a stable workflow, say that plainly and
 help the user clarify the reusable part first.
 
-## Core Principle
+## Core Principles
+
+### Capture The Repeatable Value
 
 The skill should capture the repeatable value, not the accidental details.
 
@@ -70,6 +81,40 @@ A bad abstraction copies:
 - incidental tools that happened to be used once
 - order-of-operations that are not actually essential
 - user wording that does not generalize
+
+### Explain Why, Not Just What
+
+Prefer instructions that explain why a step matters.
+Avoid brittle mandates unless the workflow truly requires them.
+
+If you find yourself writing a long list of rigid commands with no reasoning,
+you are probably transcribing the thread instead of building a skill.
+
+### Choose The Smallest Useful Shape
+
+Do not overbuild the skill.
+Use the smallest structure that preserves the capability:
+
+- `SKILL.md` only, when the workflow is mostly reasoning and sequencing
+- `SKILL.md` plus `references/`, when the skill needs domain guidance
+- `SKILL.md` plus `scripts/`, when deterministic repeated work should be bundled
+- `SKILL.md` plus `evals/`, when the skill benefits from repeatable testing
+
+### Decide Placement Before Writing Files
+
+Pick the skill location before creating files so the paths stay stable:
+
+- **Global**: `~/.agents/skills/<skill-name>`
+- **Project-based**: `<project-path>/.agents/skills/<skill-name>`
+
+If the user wants a global skill to be discoverable by Codex immediately, also
+create:
+
+- `~/.codex/skills/<skill-name>` as a symlink to the global skill directory
+
+If you plan to run evals, place the workspace next to the skill directory as:
+
+- `<skill-name>-workspace/`
 
 ## Default Workflow
 
@@ -99,15 +144,27 @@ Classify each detail into one of three buckets:
 
 Useful heuristic:
 
-- if the detail would still matter in six months on a different project, it is
-  probably core
-- if it only mattered because of this repository, filename, or user phrasing, it
-  is probably contextual or incidental
+- if the detail would still matter in six months on a different project, it is probably core
+- if it only mattered because of this repository, filename, or user phrasing, it is probably contextual or incidental
 
-### 3. Produce An Abstraction Brief Before Writing Files
+### 3. Fill Gaps With Minimal Interview Or Research
+
+Do not ask the user to restate the whole workflow if the thread already tells
+you most of it.
+Only ask for the missing pieces that affect the resulting skill:
+
+- what this skill should enable the agent to do
+- when the skill should trigger
+- what output format or artifact the user expects
+- whether lightweight test prompts would help validate the result
+
+If examples, edge cases, dependencies, or adjacent skills matter, gather that
+context before writing the final version.
+
+### 4. Produce An Abstraction Brief Before Writing Files
 
 Before generating the final skill, write a short abstraction brief for the user
-to review.
+to review unless they already said to just build it.
 
 Use this structure:
 
@@ -142,10 +199,10 @@ Use this structure:
 - ...
 ```
 
-If the conversation already settles these points, keep the brief short and move on.
-If important gaps remain, ask only the minimum targeted questions needed.
+If the conversation already settles these points, keep the brief short and move
+on.
 
-### 4. Challenge Weak Abstractions
+### 5. Challenge Weak Abstractions
 
 Do not act like a passive stenographer.
 If the proposed skill is overfit, under-scoped, or missing the real judgment
@@ -157,28 +214,27 @@ Common failure modes to call out:
 - "These instructions depend on this exact repo, but the user asked for a global skill."
 - "The workflow says what to do, but not how to decide when a step is necessary."
 - "The description would under-trigger because it only names one phrasing."
+- "This skill repeats manual work that should be moved into a bundled script."
 
-### 5. Decide The Skill Shape
+### 6. Decide Location, Shape, And Scope
 
-Choose the smallest structure that preserves the capability.
+Make these decisions before writing:
 
-Possible outputs:
+- whether the skill is global or project-based
+- whether to preserve an existing name and directory
+- whether `SKILL.md` alone is enough
+- whether the skill needs `references/`, `scripts/`, `assets/`, or `evals/`
+- whether a sibling workspace should be created for testing
 
-- `SKILL.md` only, when the workflow is mostly reasoning and sequencing
-- `SKILL.md` plus `references/`, when the skill needs domain-specific guidance
-- `SKILL.md` plus `scripts/`, when repeated deterministic work should be bundled
-- `SKILL.md` plus `evals/`, when the output is objectively testable and worth iterating on
+Default location rules:
 
-Also decide whether the skill should be:
+- **Global skill**: `~/.agents/skills/<skill-name>`
+- **Project-based skill**: `<project-path>/.agents/skills/<skill-name>`
 
-- **Global**: `~/.agents/skills/<skill-name>`
-- **Project-local**: `<project-root>/.agents/skills/<skill-name>`
+If updating an existing skill, preserve the directory name and frontmatter name
+unless the user asked for a rename.
 
-If the user wants Codex to discover a global skill immediately, also create:
-
-- `~/.codex/skills/<skill-name>` as a symlink to the global skill directory
-
-### 6. Write The Skill
+### 7. Write The Skill Like A Real Skill
 
 When writing `SKILL.md`, include:
 
@@ -189,25 +245,93 @@ When writing `SKILL.md`, include:
 - output expectations
 - edge cases and boundaries when they materially affect quality
 
-Write the description a little aggressively so the host does not under-trigger it.
-The description should mention both the capability and the contexts that should
-cause the skill to be used.
+Bring in the `skill-creator` quality bar here:
 
-### 7. Preserve Generality
+- make the description a little aggressive so hosts do not under-trigger it
+- include both what the skill does and the contexts that should trigger it
+- prefer imperative instructions
+- explain the reasoning behind important steps
+- keep the file readable; if it grows too large, move detail into references
 
-Prefer instructions that explain why a step matters.
-Avoid brittle mandates unless the workflow truly requires them.
+### 8. Use Clean Skill Structure
 
-Aim for a skill that can survive beyond this exact thread.
+Prefer this structure when it helps:
 
-### 8. Close With A Clear Hand-off
+```text
+skill-name/
+├── SKILL.md
+├── references/
+├── scripts/
+├── assets/
+└── evals/
+```
+
+Use progressive disclosure:
+
+1. metadata in frontmatter should be enough to trigger the skill
+2. `SKILL.md` should explain the workflow clearly
+3. large reference material should be loaded only when relevant
+
+When the skill supports multiple variants or domains, organize references by
+variant and tell the future agent which file to read for which case.
+
+### 9. Bundle Repeated Deterministic Work
+
+If multiple runs of the workflow would obviously repeat the same deterministic
+steps, package that work into `scripts/` instead of forcing future agents to
+reinvent it every time.
+
+Good candidates:
+
+- file conversions
+- formatting helpers
+- benchmark aggregation
+- schema validation
+- packaging helpers
+
+Do not add scripts just because you can.
+Only bundle work that is repeated, stable, and cheaper to reuse than to re-derive.
+
+### 10. Add Evals When The Skill Warrants Them
+
+Not every conversation-derived skill needs evals.
+But if the skill produces objectively testable outputs, or if the user wants to
+improve the skill rather than just draft it, add a lightweight evaluation loop.
+
+Default pattern:
+
+- create 2-3 realistic test prompts
+- store them in `evals/evals.json`
+- if improving an existing skill, compare the new version to the old version or to no skill
+- use a sibling workspace for iteration results
+- let the user review outputs before making another round of changes
+
+Prefer qualitative review for subjective skills.
+Prefer assertions and benchmarks for objective skills.
+
+### 11. Iterate Instead Of Fossilizing Bad Drafts
+
+If the first draft feels narrow, ambiguous, or weakly triggered, improve it.
+Useful improvement passes include:
+
+- description tuning for better triggering
+- removing overfit instructions
+- generalizing from user feedback
+- turning repeated ad hoc steps into bundled resources
+- simplifying sections that make the model do busywork
+
+Do not force a full benchmark loop if the user only wants a draft.
+But do not pretend the first draft is final if it clearly is not.
+
+### 12. Close With A Clear Hand-off
 
 After creating or revising the skill, report:
 
 - the chosen skill name
-- whether it is global or project-local
+- whether it is global or project-based
 - the final path
 - whether a Codex symlink was created
+- whether eval files or a workspace were created
 - what still needs evaluation, if anything
 
 ## Naming Guidance
@@ -223,8 +347,8 @@ Prefer names like:
 Avoid names that depend on this thread's temporary wording unless the user
 explicitly wants that.
 
-If updating an existing skill, preserve the existing directory name and frontmatter name
-unless the user asked for a rename.
+If updating an existing skill, preserve the existing directory name and
+frontmatter name unless the user asked for a rename.
 
 ## Output Format
 
@@ -239,6 +363,12 @@ If the user asks to proceed, then write the files.
 When the user already said "build it" or "just make it", go straight from the
 brief into file creation in the same turn.
 
+If you also set up evals, mention:
+
+- the test prompts
+- what is being compared
+- where the reviewable output lives
+
 ## Quality Bar
 
 The resulting skill should make a future agent meaningfully better at the task.
@@ -250,4 +380,21 @@ That usually means it captures at least one of these:
 - a reusable artifact format
 - a reusable boundary or escalation rule
 
+Strong skills often also have at least one of these:
+
+- a well-targeted description that triggers reliably
+- a clean placement and file layout
+- a bundled helper for repeated deterministic work
+- a small eval loop that makes improvements testable
+
 If it captures none of those, it is probably not a real skill yet.
+
+## Safety And Boundaries
+
+Do not create misleading, hostile, or surprise-heavy skills.
+The skill should do what its description honestly suggests.
+
+Do not package instructions that facilitate unauthorized access, harmful
+automation, or disguised exfiltration.
+
+Roleplay, stylistic framing, and benign workflow abstraction are fine.
