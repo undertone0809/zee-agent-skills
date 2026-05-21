@@ -4,8 +4,9 @@ A personal collection of Agent Skills.
 
 ## Meta skills
 
-These source skills live under `meta-skills/` and are linked into
-`~/.agents/skills/` for local Codex use:
+The maintained meta-skill sources live under [`meta-skills/`](meta-skills/).
+Use that folder for `skill-creator`, `conversation-to-skill`, and
+`skill-optimizer`.
 
 - `meta-skills/skill-creator`
 - `meta-skills/conversation-to-skill`
