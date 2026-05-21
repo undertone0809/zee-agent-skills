@@ -73,6 +73,45 @@ You can also use meta skills for narrower requests:
 - "Based on this failure, add validation cases to the existing skill."
 - "Package this skill so it is installable and evaluable."
 
+## Self-Iteration Best Practice
+
+Meta skills are most valuable when they run as a recurring skill-maintenance
+loop. You do not need heavy manual process. A small amount of human feedback,
+captured from real sessions, is enough when it is reviewed systematically.
+
+In Claude Code, Codex, OpenClaw, or any agent runtime that supports scheduled
+work, create two daily automation tasks:
+
+```text
+Look at the latest 30 Codex sessions. Considering the existing skills, are there
+any new workflows that should become Conversation to Skill outputs?
+```
+
+Use [`conversation-to-skill`](conversation-to-skill/SKILL.md) to turn repeated
+successful workflows, corrected procedures, and emerging SOPs into new skill
+packages.
+
+```text
+Look at the latest 30 Codex sessions. Considering the existing skills, which
+project skills need optimization with Skill Optimizer?
+```
+
+Use [`skill-optimizer`](skill-optimizer/SKILL.md) to turn user corrections,
+execution failures, missed triggers, weak outputs, and validation gaps into
+small reviewable patches.
+
+Each report should include:
+
+- the session evidence behind each recommendation
+- whether the recommendation is a new-skill candidate or an existing-skill patch
+- the failure class or repeated success pattern
+- the suggested skill change
+- the eval, trigger case, or validation case that would prove the change works
+
+With those two reports, the human feedback loop stays small: review the
+recommendations, approve the high-signal patches, and let the next day's
+sessions test whether the skills improved.
+
 ## Skills
 
 - [`skill-creator`](skill-creator/SKILL.md): create new skills, refine existing

@@ -37,6 +37,37 @@ practice
 
 其中 `meta-skills` 是这套循环的中心。你想从近期实践里创建新 skill，或者基于真实证据优化 project skills 时，优先使用它。
 
+## 自迭代
+
+提升 Agent Skills 最好的方式，不是等到某次大型人工 review，而是把真实 session 里的少量人工反馈持续转成每日 skill 维护循环。
+
+在 Claude Code、Codex、OpenClaw，或者任何支持 scheduled work 的 agent runtime 里，创建两个自动化任务：
+
+```text
+看一下最近 30 个 Codex session，结合现有的 skills，有哪些新的需要 Conversation to Skill 吗？
+```
+
+```text
+看一下最近 30 个 Codex session，结合现有的 skills，哪些 project skill 需要优化吗 Skill Optimizer？
+```
+
+这样你每天会收到两份报告：
+
+- 哪些重复实践应该被提炼成新的 skill。
+- 哪些已有 skill 应该 patch、澄清边界、补 eval，或者做 benchmark。
+
+报告应该基于证据，而不是泛泛建议。好的报告会把每个建议关联到真实 session、用户纠正、重复 workflow、failure class、缺失 trigger 或 validation gap。人只需要 review 高信号建议，并批准真正值得合入的 patch。
+
+这会形成一个轻量但科学的自迭代闭环：
+
+```text
+daily sessions
+-> automated skill review reports
+-> small human feedback
+-> Conversation to Skill or Skill Optimizer patches
+-> better skills for tomorrow's sessions
+```
+
 ## 安装
 
 安装你需要的文件夹：

@@ -50,6 +50,45 @@ The meta-skills collection is the center of that loop. Use it when you want to
 turn recent practice into new skills or improve project skills from real
 evidence.
 
+## Self-Iteration
+
+The best way to improve Agent Skills is not to wait for a large manual review.
+Use a small amount of human feedback, captured from real sessions, and turn it
+into a daily skill-maintenance loop.
+
+In Claude Code, Codex, OpenClaw, or any agent runtime that supports scheduled
+work, create two recurring automation tasks:
+
+```text
+Look at the latest 30 Codex sessions. Considering the existing skills, are there
+any new workflows that should become Conversation to Skill outputs?
+```
+
+```text
+Look at the latest 30 Codex sessions. Considering the existing skills, which
+project skills need optimization with Skill Optimizer?
+```
+
+This gives you two reports every day:
+
+- new skill candidates that should be extracted from repeated practice
+- existing skills that should be patched, clarified, evaluated, or benchmarked
+
+The reports should be evidence-based. A good report links each recommendation
+to actual sessions, user corrections, repeated workflow patterns, failure
+classes, missing triggers, or validation gaps. The human only needs to review
+the high-signal recommendations and approve the patches that matter.
+
+This creates a lightweight but scientific self-iteration loop:
+
+```text
+daily sessions
+-> automated skill review reports
+-> small human feedback
+-> Conversation to Skill or Skill Optimizer patches
+-> better skills for tomorrow's sessions
+```
+
 ## Install
 
 Install the folder you want:
