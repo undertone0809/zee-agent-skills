@@ -13,27 +13,12 @@ extract, and improve other Agent Skills.
   refactor an existing skill from evidence, failures, traces, and user
   corrections.
 
-## Install Locally
+## Install
 
-Codex loads user skills from `~/.agents/skills`. Link these source directories
-there:
-
-```bash
-mkdir -p ~/.agents/skills
-
-ln -sfn /Users/zeeland/projects/zee-agent-skills/meta-skills/skill-creator \
-  ~/.agents/skills/skill-creator
-ln -sfn /Users/zeeland/projects/zee-agent-skills/meta-skills/conversation-to-skill \
-  ~/.agents/skills/conversation-to-skill
-ln -sfn /Users/zeeland/projects/zee-agent-skills/meta-skills/skill-optimizer \
-  ~/.agents/skills/skill-optimizer
-```
-
-If older links exist under `~/.codex/skills`, remove them so there is only one
-source of truth:
+Install from the root repository:
 
 ```bash
-rm -f ~/.codex/skills/skill-creator \
-  ~/.codex/skills/conversation-to-skill \
-  ~/.codex/skills/skill-optimizer
+npx skills add Undertone0809/zee-agent-skills
 ```
+
+Use the CLI prompt to install all meta skills or only the one you need.
