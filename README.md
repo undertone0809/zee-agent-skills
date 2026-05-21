@@ -25,5 +25,5 @@ Use that folder for `skill-creator`, `conversation-to-skill`, and
 ## Quick Start
 
 ```
-npx skills add Undertone0809/zee-agent-skills
+npx skills add Undertone0809/zee-skills
 ```
