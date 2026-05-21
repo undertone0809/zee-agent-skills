@@ -1,0 +1,5 @@
+.DS_Store
+__pycache__/
+*.pyc
+.agents/skills/flomo-analysis-studio-workspace/
+gstack-style-doc/
