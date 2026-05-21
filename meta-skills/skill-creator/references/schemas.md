@@ -1,7 +1,6 @@
 # JSON Schemas
 
-This document defines the JSON schemas used by the bundled skill evaluation
-toolchain for `conversation-to-skill`.
+This document defines the JSON schemas used by skill-creator.
 
 ---
 
