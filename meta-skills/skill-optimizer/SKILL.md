@@ -145,6 +145,8 @@ Never silently weaken safety requirements. For write actions, publishing, financ
 
 The frontmatter description is the primary discovery signal. After improving a skill, evaluate whether the description should change.
 
+Keep description changes compatible with host routing limits. A good optimized description is concise and discriminating, not exhaustive: normally 50-100 words, always under 1024 characters for Codex-style validators, and free of angle brackets. If a proposed patch makes the description long, split the detailed procedure into the body or references and leave the frontmatter for trigger intent, near-miss boundaries, and competing-skill exclusions.
+
 Create trigger evals with:
 
 - realistic should-trigger queries

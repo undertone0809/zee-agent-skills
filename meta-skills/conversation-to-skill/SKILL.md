@@ -127,6 +127,8 @@ The `description` is the main trigger surface. It must say both what the skill d
 
 Include natural language triggers, near-synonyms, and contexts where the user may not explicitly say “skill.” Also include boundaries that prevent obvious misfires.
 
+Keep the description compact. Treat 50-100 words as the normal budget and 1024 characters as the maximum compatibility limit for Codex-style validators. If the candidate description is approaching the limit, compress it before expanding the body: keep the task, trigger phrases, near-miss boundary, and one or two competing-skill exclusions; move detailed workflow rules into the body or references.
+
 Good description pattern:
 
 ```yaml
@@ -259,6 +261,7 @@ Before finishing, verify:
 
 - The skill is not just a transcript summary.
 - The description contains strong trigger phrases.
+- The description stays compact: normally 50-100 words, never over 1024 characters, and not stuffed with workflow details that belong in the body.
 - The skill has a clear workflow and output format.
 - Reusable rules are separated from one-off details.
 - Sensitive information is removed or generalized.

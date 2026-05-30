@@ -66,7 +66,7 @@ Check available MCPs - if useful for research (searching docs, finding similar s
 Based on the user interview, fill in these components:
 
 - **name**: Skill identifier
-- **description**: When to trigger, what it does. This is the primary triggering mechanism - include both what the skill does AND specific contexts for when to use it. All "when to use" info goes here, not in the body. Note: many hosts have a tendency to "undertrigger" skills -- to not use them when they'd be useful. To combat this, please make the skill descriptions a little bit "pushy". So for instance, instead of "How to build a simple fast dashboard to display internal Anthropic data.", you might write "How to build a simple fast dashboard to display internal Anthropic data. Make sure to use this skill whenever the user mentions dashboards, data visualization, internal metrics, or wants to display any kind of company data, even if they don't explicitly ask for a 'dashboard.'"
+- **description**: When to trigger, what it does. This is the primary triggering mechanism - include both what the skill does AND specific contexts for when to use it. All "when to use" info goes here, not in the body. Note: many hosts have a tendency to "undertrigger" skills -- to not use them when they'd be useful. To combat this, make descriptions a little bit pushy, but keep them within the metadata budget: aim for 50-100 words and stay under 1024 characters for Codex-style validators. If the description grows past that, compress the trigger list and move workflow details into the body.
 - **compatibility**: Required tools, dependencies (optional, rarely needed)
 - **the rest of the skill :)**
 
@@ -92,7 +92,7 @@ Skills use a three-level loading system:
 2. **SKILL.md body** - In context whenever skill triggers (<500 lines ideal)
 3. **Bundled resources** - As needed (unlimited, scripts can execute without loading)
 
-These word counts are approximate and you can feel free to go longer if needed.
+These word counts are approximate, but treat the metadata budget as real. Long descriptions can make routing worse or fail host validation. Keep the frontmatter description concise, and do not exceed 1024 characters.
 
 **Key patterns:**
 - Keep SKILL.md under 500 lines; if you're approaching this limit, add an additional layer of hierarchy along with clear pointers about where the model using the skill should go next to follow up.
@@ -351,6 +351,8 @@ This is optional, requires subagents, and most users won't need it. The human re
 ## Description Optimization
 
 The description field in SKILL.md frontmatter is the primary mechanism that determines whether a host invokes a skill. After creating or improving a skill, offer to optimize the description for better triggering accuracy.
+
+Do not optimize by bloating the description. Every candidate description should fit the same compatibility budget as a hand-written skill: usually 50-100 words, under 1024 characters, no angle brackets, and focused on task ownership, trigger phrases, near-miss boundaries, and the most important competing-skill exclusions.
 
 ### Step 1: Generate trigger eval queries
 
