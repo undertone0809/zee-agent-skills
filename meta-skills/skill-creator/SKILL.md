@@ -7,7 +7,7 @@ description: Create new skills, modify and improve existing skills, and measure 
 
 A skill for creating new skills and iteratively improving them.
 
-Read `references/compatibility.md` before running automation-heavy steps or description-tuning loops on a non-Claude host.
+Before host-sensitive work, read exactly one compatibility guide from `references/compatibility/`: `claudecode.md`, `codex.md`, or `other.md`. Read more than one only when packaging or evaluating the same skill across multiple hosts.
 
 At a high level, the process of creating a skill goes like this:
 
@@ -70,6 +70,8 @@ Based on the user interview, fill in these components:
 - **compatibility**: Required tools, dependencies (optional, rarely needed)
 - **the rest of the skill :)**
 
+If the target host is Codex/OpenAI, create or update `agents/openai.yaml` when the skill should appear cleanly in product UI, provide a default prompt, declare MCP dependencies, or control implicit invocation. See `references/compatibility/codex.md`.
+
 ### Skill Writing Guide
 
 #### Anatomy of a Skill
@@ -79,6 +81,8 @@ skill-name/
 ├── SKILL.md (required)
 │   ├── YAML frontmatter (name, description required)
 │   └── Markdown instructions
+├── agents/ (optional, host-specific)
+│   └── openai.yaml - Codex/OpenAI UI metadata, default prompt, dependencies, and invocation policy
 └── Bundled Resources (optional)
     ├── scripts/    - Executable code for deterministic/repetitive tasks
     ├── references/ - Docs loaded into context as needed
@@ -492,7 +496,9 @@ The agents/ directory contains instructions for specialized subagents. Read them
 
 The references/ directory has additional documentation:
 
-- `references/compatibility.md` — Host differences for Claude Code, Codex, and chat-only environments
+- `references/compatibility/claudecode.md` — Claude Code behavior, real trigger measurement, and baseline mechanics
+- `references/compatibility/codex.md` — Codex/OpenAI behavior, judged trigger proxy, and `agents/openai.yaml`
+- `references/compatibility/other.md` — Generic shell agents, chat-only hosts, and headless worker adaptations
 - `references/schemas.md` — JSON structures for evals.json, grading.json, etc.
 
 ---
