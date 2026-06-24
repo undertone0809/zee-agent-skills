@@ -1,0 +1,24 @@
+{
+  "skill_name": "codex-insights",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "给我做一个 Codex 版 /insights：看最近 30 个本地 Codex sessions，总结我最常做的工作、卡点、以及哪些 workflow 应该沉淀成 skill 或 automation。",
+      "expected_output": "A concise evidence-backed report using local Codex history, separating raw sessions from workflow recommendations.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Audit my recent Codex runs under /Users/zeeland/projects/rudder-oss and tell me whether a new skill is warranted or if existing skills should be optimized instead.",
+      "expected_output": "A scoped Codex insights report filtered to the requested cwd with conservative new-skill recommendations.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Generate a quick Codex usage insights report for this month and save the artifacts somewhere under /tmp so I can inspect the evidence.",
+      "expected_output": "A report path and JSON artifact path plus a short summary of sources, analyzed sessions, patterns, and friction points.",
+      "files": []
+    }
+  ]
+}
+

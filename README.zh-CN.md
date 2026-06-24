@@ -18,6 +18,7 @@ practice
 
 - [`meta-skills`](meta-skills/README.zh-CN.md)：创建、提炼、优化、评估和打包 Agent Skills。
 - [`flomo-skills`](flomo-skills/README.md)：搜索、创建、编辑、导出和分析 flomo memos。
+- [`codex-insights`](codex-insights/README.md)：从本地 Codex session 历史生成 Claude Code `/insights` 风格的使用洞察报告。
 - [`gstack-style-doc`](gstack-style-doc/README.md)：生成 gstack 风格的技术文档。
 - [`screenshot`](screenshot/README.md)：截取桌面、应用、窗口、区域或全屏截图。
 
@@ -73,6 +74,7 @@ daily sessions
 ```bash
 npx skills add Undertone0809/zee-agent-skills/meta-skills
 npx skills add Undertone0809/zee-agent-skills/flomo-skills
+npx skills add Undertone0809/zee-agent-skills/codex-insights
 npx skills add Undertone0809/zee-agent-skills/gstack-style-doc
 npx skills add Undertone0809/zee-agent-skills/screenshot
 ```
